@@ -25,14 +25,17 @@ then
     FILEOUT="${FILEIN%.vcf.gz}_"$5".vcf.gz"
 
     # 3. Run bcftools accounting for options to include
+    -Oz -o sample_pass_filtered.vcf.gz
+    bcftools filter -e 'FORMAT/GQ<20 || FORMAT/DP<10' -S . sample_pass_filtered.vcf.gz -Oz -o sample_final_output.vcf.gz
+
     if [ "$2" != "NA" ] && [ "$3" != "NA" ]
     then
-        bcftools annotate -x $2 $FILEIN | bcftools norm -m - | bcftools filter -i $3 -Oz -o $FILEOUT --threads $4
+        bcftools annotate -x $2 $FILEIN | bcftools norm -m - | bcftools view -f PASS | bcftools filter -e 'FORMAT/GQ<20 || FORMAT/DP<10' -S . | bcftools filter -i $3 -Oz -o $FILEOUT --threads $4
     elif [ "$2" != "NA" ] && [ "$3" == "NA" ]
     then
-        bcftools annotate -x $2 $FILEIN | bcftools norm -m - -Oz -o $FILEOUT --threads $4
+        bcftools annotate -x $2 $FILEIN | bcftools norm -m - | bcftools view -f PASS | bcftools filter -e 'FORMAT/GQ<20 || FORMAT/DP<10' -S . -Oz -o $FILEOUT --threads $4
     else
-        bcftools norm -m - $FILEIN | bcftools filter -i $3 -Oz -o $FILEOUT --threads $4
+        bcftools norm -m - $FILEIN | bcftools view -f PASS | bcftools filter -e 'FORMAT/GQ<20 || FORMAT/DP<8' -S . | bcftools filter -i $3 -Oz -o $FILEOUT --threads $4
     fi
 
     # 4. Upload trimmed VCF here:
