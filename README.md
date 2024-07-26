@@ -45,19 +45,19 @@ As opposed to the original version, this version is made for analyzing the DRAGE
 `FILTER==PASS`
 
 #### Example 1:
-Removing all fields within `FORMAT` except for `GT`, `GQ` and `FT` (which are needed for genotypes and basic filtering):
+Removing all fields within `FORMAT` except for `GT` (which are needed for genotypes):
 ```
 dx run vcf_trimmer \
   -ivcf_file_list=/path/to/vcf_file_list.txt \
   -ifile_label=trimmed3 \
   -ioutput_dir=/path/to/output/dir \
   -iqc_thresholds="NA" \
-  -ifields_to_remove="FORMAT/LAD,FORMAT/LPL,FORMAT/LAA,FORMAT/LAF,FORMAT/QL" \
+  -ifields_to_remove="FORMAT/GQ,FORMAT/FT,FORMAT/LAD,FORMAT/LPL,FORMAT/LAA,FORMAT/LAF,FORMAT/QL" \
   -y
 ```
 
 #### Example 2:
-Removing all fields within `FORMAT` (except for `GT`, `GQ` and `FT`) and removing all from `INFO` and `FILTER`:
+Removing all fields within `FORMAT` (except for `GT`) and removing all from `INFO` and `FILTER`:
 
 ```
 dx run vcf_trimmer \
@@ -65,7 +65,7 @@ dx run vcf_trimmer \
   -ifile_label=trimmed2 \
   -ioutput_dir=/path/to/output/dir \
   -iqc_thresholds="NA" \
-  -ifields_to_remove="FORMAT/LAD,FORMAT/LPL,FORMAT/LAA,FORMAT/LAF,FORMAT/QL,INFO/AC,INFO/AN,INFO/NS,INFO/NS_GT,INFO/NS_NOGT,INFO/NS_NODATA,INFO/IC,INFO/HWE,INFO/ExcHet,INFO/HWE_CHISQ,FILTER/DRAGENSnpHardQUAL,FILTER/DRAGENIndelHardQUAL,FILTER/LowDepth,FILTER/PloidyConflict,FILTER/base_quality,FILTER/filtered_reads,FILTER/fragment_length,FILTER/low_af,FILTER/low_frac_info_reads,FILTER/low_normal_depth,FILTER/long_indel,FILTER/mapping_quality,FILTER/multiallelic,FILTER/non_homref_normal,FILTER/no_reliable_supporting_read,FILTER/panel_of_normals,FILTER/read_position,FILTER/RMxNRepeatRegion,FILTER/str_contraction,FILTER/too_few_supporting_reads,FILTER/weak_evidence" \
+  -ifields_to_remove="FORMAT/GQ,FORMAT/FT,FORMAT/LAD,FORMAT/LPL,FORMAT/LAA,FORMAT/LAF,FORMAT/QL,INFO/AC,INFO/AN,INFO/NS,INFO/NS_GT,INFO/NS_NOGT,INFO/NS_NODATA,INFO/IC,INFO/HWE,INFO/ExcHet,INFO/HWE_CHISQ,FILTER/DRAGENSnpHardQUAL,FILTER/DRAGENIndelHardQUAL,FILTER/LowDepth,FILTER/PloidyConflict,FILTER/base_quality,FILTER/filtered_reads,FILTER/fragment_length,FILTER/low_af,FILTER/low_frac_info_reads,FILTER/low_normal_depth,FILTER/long_indel,FILTER/mapping_quality,FILTER/multiallelic,FILTER/non_homref_normal,FILTER/no_reliable_supporting_read,FILTER/panel_of_normals,FILTER/read_position,FILTER/RMxNRepeatRegion,FILTER/str_contraction,FILTER/too_few_supporting_reads,FILTER/weak_evidence" \
   -y
 ```
 
