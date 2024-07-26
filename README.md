@@ -11,7 +11,7 @@ This applet performs parallel processing of VCFs through [bcftools](https://samt
 ### Obtaining and installing the applet
 Clone this github repo to a local directory:
 ```
-git clone https://github.com/drarwood/vcf_trimmer
+git clone https://github.com/seanjosephjurgens/vcf_trimmer
 ```
 Navigate to a relevant directory within the project directory on the DNAnexus platform
 ```
