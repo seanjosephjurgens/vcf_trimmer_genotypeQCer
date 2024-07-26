@@ -41,10 +41,8 @@ This applet takes one file in as input that simply lists the VCFs to process, on
 Strings that define inclusion criteria and fields to exclude should be consistent with input expected by bcftools and placed within quotes. See the [bcftools](https://samtools.github.io/bcftools/bcftools.html) manual for more information.
 
 ### IMPORTANT:
-As opposed to the original version, this one is made for analyzing the DRAGEN 500k WGS data, and also performs the following QC by default:
+As opposed to the original version, this version is made for analyzing the DRAGEN 500k WGS data. The 'minimal' branch only performs the following QC by default:
 `FILTER==PASS`
-`GQ>20`
-`FT==PASS`
 
 #### Example 1:
 Removing all fields within `FORMAT` except for `GT`, `GQ` and `FT` (which are needed for genotypes and basic filtering):
@@ -73,15 +71,15 @@ dx run vcf_trimmer \
 
 
 #### Example 3:
-Removing all fields within `FORMAT` (except for `GT`, `GQ` and `FT`) and removing all from `INFO`, except for `ExcHet` and `IC` which must remain as as inclusion critera of an `ExcHet` < 70 and `IC>=-0.2:
+Removing all fields within `FORMAT` (except for `GT`) and removing all from `INFO`, except for `ExcHet` which must remain as as inclusion critera of an `ExcHet` < 55:
 
 ```
 dx run vcf_trimmer \
   -ivcf_file_list=/path/to/vcf_file_list.txt \
   -ifile_label=trimmed2 \
   -ioutput_dir=/path/to/output/dir \
-  -iqc_thresholds="INFO/ExcHet<70,INFO/IC>=-0.20" \
-  -ifields_to_remove="FORMAT/LAD,FORMAT/LPL,FORMAT/LAA,FORMAT/LAF,FORMAT/QL,INFO/AC,INFO/AN,INFO/NS,INFO/NS_GT,INFO/NS_NOGT,INFO/NS_NODATA,INFO/HWE,INFO/HWE_CHISQ,FILTER/DRAGENSnpHardQUAL,FILTER/DRAGENIndelHardQUAL,FILTER/LowDepth,FILTER/PloidyConflict,FILTER/base_quality,FILTER/filtered_reads,FILTER/fragment_length,FILTER/low_af,FILTER/low_frac_info_reads,FILTER/low_normal_depth,FILTER/long_indel,FILTER/mapping_quality,FILTER/multiallelic,FILTER/non_homref_normal,FILTER/no_reliable_supporting_read,FILTER/panel_of_normals,FILTER/read_position,FILTER/RMxNRepeatRegion,FILTER/str_contraction,FILTER/too_few_supporting_reads,FILTER/weak_evidence" \
+  -iqc_thresholds="INFO/ExcHet<55" \
+  -ifields_to_remove="FORMAT/QC,FORMAT/FT,FORMAT,LAD,FORMAT/LAD,FORMAT/LPL,FORMAT/LAA,FORMAT/LAF,FORMAT/QL,INFO/AC,INFO/AN,INFO/NS,INFO/NS_GT,INFO/NS_NOGT,INFO/IC,INFO/NS_NODATA,INFO/HWE,INFO/HWE_CHISQ,FILTER/DRAGENSnpHardQUAL,FILTER/DRAGENIndelHardQUAL,FILTER/LowDepth,FILTER/PloidyConflict,FILTER/base_quality,FILTER/filtered_reads,FILTER/fragment_length,FILTER/low_af,FILTER/low_frac_info_reads,FILTER/low_normal_depth,FILTER/long_indel,FILTER/mapping_quality,FILTER/multiallelic,FILTER/non_homref_normal,FILTER/no_reliable_supporting_read,FILTER/panel_of_normals,FILTER/read_position,FILTER/RMxNRepeatRegion,FILTER/str_contraction,FILTER/too_few_supporting_reads,FILTER/weak_evidence" \
   -y
 ```
 
