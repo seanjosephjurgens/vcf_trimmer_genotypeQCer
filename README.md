@@ -43,7 +43,7 @@ Strings that define inclusion criteria and fields to exclude should be consisten
 As opposed to the original version, this one is made for analyzing the DRAGEN 500k WGS data, and also performs the following QC by default:
 `FILTER==PASS`
 `QC>20`
-`DP>8`
+`FT==PASS`
 
 #### Example 1:
 Removing all fields within `FORMAT` except for `GT` without applying inclusion critiera:
