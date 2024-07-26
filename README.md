@@ -1,5 +1,6 @@
 # VCF Trimmer for UK Biobank RAP
 #### Developed by Andrew Wood. University of Exeter
+#### Re-purposed by Sean Jurgens. Broad Institute / Amsterdam UMC
 
 This applet performs parallel processing of VCFs through [bcftools](https://samtools.github.io/bcftools/bcftools.html). This applet has been designed to reduce file sizes down when required for merging of data by:
 * Splitting multiallelic sites (note left-alignment and normalisation not presently set)
@@ -46,19 +47,32 @@ As opposed to the original version, this one is made for analyzing the DRAGEN 50
 `FT==PASS`
 
 #### Example 1:
-Removing all fields within `FORMAT` except for `GT` without applying inclusion critiera:
+Removing all fields within `FORMAT` except for `GT`, `GQ` and `FT` (which are needed for genotypes and basic filtering):
 ```
 dx run vcf_trimmer \
   -ivcf_file_list=/path/to/vcf_file_list.txt \
   -ifile_label=trimmed3 \
   -ioutput_dir=/path/to/output/dir \
   -iqc_thresholds="NA" \
-  -ifields_to_remove="FORMAT/GQ,FORMAT/LAD,FORMAT/FT,FORMAT/LPL,FORMAT/LAA,FORMAT/LAF,FORMAT/QL" \
+  -ifields_to_remove="FORMAT/LAD,FORMAT/LPL,FORMAT/LAA,FORMAT/LAF,FORMAT/QL" \
   -y
 ```
 
-#### Example 2:
-Removing all fields within `FORMAT` except for `GT` and `INFO` except for `ExcHet` which must remain as as inclusion critera of an `ExcHet` > 0.5:
+#### Example 3:
+Removing all fields within `FORMAT` (except for `GT`, `GQ` and `FT`) and removing all from `INFO`:
+
+```
+dx run vcf_trimmer \
+  -ivcf_file_list=/path/to/vcf_file_list.txt \
+  -ifile_label=trimmed2 \
+  -ioutput_dir=/path/to/output/dir \
+  -iqc_thresholds="NA" \
+  -ifields_to_remove="FORMAT/GQ,FORMAT/LAD,FORMAT/FT,FORMAT/LPL,FORMAT/LAA,FORMAT/LAF,FORMAT/QL,INFO/AC,INFO/AN,INFO/NS,INFO/NS_GT,INFO/NS_NOGT,INFO/NS_NODATA,INFO/IC,INFO/HWE,INFO/ExcHet,INFO/HWE_CHISQ" \
+  -y
+```
+
+#### Example 3:
+Removing all fields within `FORMAT` (except for `GT`, `GQ` and `FT`) and removing all from `INFO`, except for `ExcHet` which must remain as as inclusion critera of an `ExcHet` > 0.5:
 
 ```
 dx run vcf_trimmer \
@@ -66,7 +80,7 @@ dx run vcf_trimmer \
   -ifile_label=trimmed2 \
   -ioutput_dir=/path/to/output/dir \
   -iqc_thresholds="INFO/ExcHet>0.5" \
-  -ifields_to_remove="FORMAT/GQ,FORMAT/LAD,FORMAT/FT,FORMAT/LPL,FORMAT/LAA,FORMAT/LAF,FORMAT/QL,INFO/AC,INFO/AN,INFO/NS,INFO/NS_GT,INFO/NS_NOGT,INFO/NS_NODATA,INFO/IC,INFO/HWE,INFO/ExcHet,INFO/HWE_CHISQ" \
+  -ifields_to_remove="FORMAT/GQ,FORMAT/LAD,FORMAT/FT,FORMAT/LPL,FORMAT/LAA,FORMAT/LAF,FORMAT/QL,INFO/AC,INFO/AN,INFO/NS,INFO/NS_GT,INFO/NS_NOGT,INFO/NS_NODATA,INFO/IC,INFO/HWE,INFO/HWE_CHISQ" \
   -y
 ```
 
