@@ -25,9 +25,6 @@ then
     FILEOUT="${FILEIN%.vcf.gz}_"$5".vcf.gz"
 
     # 3. Run bcftools accounting for options to include
-    -Oz -o sample_pass_filtered.vcf.gz
-    bcftools filter -e 'FORMAT/GQ<20 || FORMAT/DP<10' -S . sample_pass_filtered.vcf.gz -Oz -o sample_final_output.vcf.gz
-
     if [ "$2" != "NA" ] && [ "$3" != "NA" ]
     then
         bcftools annotate -x $2 $FILEIN | bcftools norm -m - | bcftools view -f PASS | bcftools filter -e 'FORMAT/FT!="PASS" || FORMAT/QC<20' -S . | bcftools filter -i $3 -Oz -o $FILEOUT --threads $4
