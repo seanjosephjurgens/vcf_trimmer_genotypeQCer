@@ -28,20 +28,20 @@ then
     if [ "$2" != "NA" ] && [ "$3" != "NA" ]
     then
         export BCFTOOLS_PLUGINS=plugins/
-        bcftools annotate -x $2 $FILEIN -Ou | bcftools norm -m - -Ou | bcftools view -f PASS -Ou | bcftools +setGT -Ou -- -t q -i '(FORMAT/GT="0/1" || FORMAT/GT="1/1") & FORMAT/FT!="PASS"' -n . | bcftools filter -i $3 -Oz -o $FILEOUT --threads $4
+        bcftools annotate -x $2 $FILEIN -Ou | bcftools norm -m - -Ou | bcftools view -f PASS -Ou | bcftools +setGT -Ou -- -t q -i 'FORMAT/FT!="PASS"' -n . | bcftools filter -i $3 -Oz -o $FILEOUT --threads $4
         #bcftools annotate -x $2 $FILEIN | bcftools norm -m - | bcftools view -f PASS | bcftools filter -i $3 -Oz -o $FILEOUT --threads $4
         #export BCFTOOLS_PLUGINS=plugins/
         #bcftools +setGT $FILEOUT --threads $4 -- -t q -i 'FORMAT/FT!="PASS"' -n .
     elif [ "$2" != "NA" ] && [ "$3" == "NA" ]
     then
         export BCFTOOLS_PLUGINS=plugins/
-        bcftools annotate -x $2 $FILEIN -Ou | bcftools norm -m - -Ou | bcftools view -f PASS -Ou | bcftools +setGT -Oz -o $FILEOUT --threads $4 -- -t q -i '(FORMAT/GT="0/1" || FORMAT/GT="1/1") & FORMAT/FT!="PASS"' -n .
+        bcftools annotate -x $2 $FILEIN -Ou | bcftools norm -m - -Ou | bcftools view -f PASS -Ou | bcftools +setGT -Oz -o $FILEOUT --threads $4 -- -t q -i 'FORMAT/FT!="PASS"' -n .
         #bcftools annotate -x $2 $FILEIN | bcftools norm -m - | bcftools view -f PASS | bcftools -Oz -o $FILEOUT --threads $4
         #export BCFTOOLS_PLUGINS=plugins/
         #bcftools +setGT $FILEOUT --threads $4 -- -t q -i 'FORMAT/FT!="PASS"' -n .
     else
         export BCFTOOLS_PLUGINS=plugins/
-        bcftools norm -m - $FILEIN -Ou | bcftools view -f PASS -Ou | bcftools +setGT -Ou -- -t q -i '(FORMAT/GT="0/1" || FORMAT/GT="1/1") & FORMAT/FT!="PASS"' -n . | bcftools filter -i $3 -Oz -o $FILEOUT --threads $4
+        bcftools norm -m - $FILEIN -Ou | bcftools view -f PASS -Ou | bcftools +setGT -Ou -- -t q -i 'FORMAT/FT!="PASS"' -n . | bcftools filter -i $3 -Oz -o $FILEOUT --threads $4
         #bcftools norm -m - $FILEIN | bcftools view -f PASS | bcftools filter -i $3 -Oz -o $FILEOUT --threads $4
         #export BCFTOOLS_PLUGINS=plugins/
         #bcftools +setGT $FILEOUT --threads $4 -- -t q -i 'FORMAT/FT!="PASS"' -n .
