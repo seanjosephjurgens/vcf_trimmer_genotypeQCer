@@ -11,6 +11,9 @@
 # $5 = label to add to vcf processed
 # $6 = output directory
 
+# Set error catching
+set -euxo pipefail
+
 # Check user has provided either fields to remove or metric thresholding
 if [ "$2" != "NA" ] || [ "$3" != "NA" ]
 then
