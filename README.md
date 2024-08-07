@@ -46,14 +46,14 @@ As opposed to the original version, this one is made for analyzing the DRAGEN 50
 `FORMAT/FT=="PASS" | FORMAT/FT=="."`
 
 #### Example 1:
-Removing all fields within `FORMAT` except for `GT`, `GQ` and `FT` (which are needed for genotypes and basic filtering):
+Removing all fields within `FORMAT` except for `GT` and `FT` (which are needed for genotypes and basic filtering):
 ```
 dx run vcf_trimmer \
   -ivcf_file_list=/path/to/vcf_file_list.txt \
   -ifile_label=trimmed3 \
   -ioutput_dir=/path/to/output/dir \
   -iqc_thresholds="NA" \
-  -ifields_to_remove="FORMAT/LAD,FORMAT/LPL,FORMAT/LAA,FORMAT/LAF,FORMAT/QL" \
+  -ifields_to_remove="FORMAT/GQ,FORMAT/LAD,FORMAT/LPL,FORMAT/LAA,FORMAT/LAF,FORMAT/QL" \
   -y
 ```
 
