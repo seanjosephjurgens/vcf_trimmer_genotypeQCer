@@ -12,7 +12,7 @@
 # $6 = output directory
 
 # Set error catching
-set -euxo pipefail
+set -euo pipefail
 
 # Check user has provided either fields to remove or metric thresholding
 if [ "$2" != "NA" ] || [ "$3" != "NA" ]
