@@ -33,16 +33,16 @@ then
     then
         #export BCFTOOLS_PLUGINS=plugins/
         #bcftools annotate -x $2 $FILEIN -Ou | bcftools norm -m - -Ou | bcftools view -f PASS -Ou | bcftools +setGT -Ou -- -t q -i 'FORMAT/FT!="PASS" & FORMAT/FT!="."' -n . | bcftools filter -i $3 -Oz -o $FILEOUT --threads $4
-        bcftools annotate -x $2 $FILEIN -Ou | bcftools norm -m - -Ou | bcftools view -f PASS -Ou | bcftools filter -i $3 -Oz -o $FILEINTER --threads $4
+        bcftools annotate -x $2 $FILEIN -Ob | bcftools norm -m - -Ob | bcftools view -f PASS -Ob | bcftools filter -i $3 -Oz -o $FILEINTER --threads $4
     elif [ "$2" != "NA" ] && [ "$3" == "NA" ]
     then
         #export BCFTOOLS_PLUGINS=plugins/
         #bcftools annotate -x $2 $FILEIN -Ou | bcftools norm -m - -Ou | bcftools view -f PASS -Ou | bcftools +setGT -Oz -o $FILEOUT --threads $4 -- -t q -i 'FORMAT/FT!="PASS" & FORMAT/FT!="."' -n .
-        bcftools annotate -x $2 $FILEIN -Ou | bcftools norm -m - -Ou | bcftools view -f PASS -Oz -o $FILEINTER --threads $4
+        bcftools annotate -x $2 $FILEIN -Ob | bcftools norm -m - -Ob | bcftools view -f PASS -Oz -o $FILEINTER --threads $4
     else
         #export BCFTOOLS_PLUGINS=plugins/
         #bcftools norm -m - $FILEIN -Ou | bcftools view -f PASS -Ou | bcftools +setGT -Ou -- -t q -i 'FORMAT/FT!="PASS" & FORMAT/FT!="."' -n . | bcftools filter -i $3 -Oz -o $FILEOUT --threads $4
-        bcftools norm -m - $FILEIN -Ou | bcftools view -f PASS -Ou | bcftools filter -i $3 -Oz -o $FILEINTER --threads $4
+        bcftools norm -m - $FILEIN -Ob | bcftools view -f PASS -Ob | bcftools filter -i $3 -Oz -o $FILEINTER --threads $4
     fi
     export BCFTOOLS_PLUGINS=plugins/
     bcftools +setGT $FILEINTER -Oz -o $FILEOUT --threads $4 -- -t q -i 'FORMAT/FT!="PASS" & FORMAT/FT!="."' -n .
