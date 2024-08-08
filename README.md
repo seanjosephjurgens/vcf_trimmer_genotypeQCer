@@ -90,7 +90,7 @@ The program will automatically discard the `FT` field after filtering genotypes,
 Compute costs not yet intenstively testes; for previous version the below applied:
 
 To assist in the throughput of this applet, multiple VCFs will be processed at the same time on a given workstation. 
-The default instance type is `mem1_ssd1_v2_x36`. Benchmarking has been based on this server type for the 200K WGS data on chromosome 17 and the maximum number of concurrent VCFs processed at a time to `20` to avoid resource issues. For 500k WGS data, `mem2_ssd1_v2_x32` does well with 7-8 processes.
+The default instance type is `mem1_ssd1_v2_x36`. Benchmarking has been based on this server type for the 200K WGS data on chromosome 17 and the maximum number of concurrent VCFs processed at a time to `20` to avoid resource issues. For 500k WGS data, `mem1_ssd1_v2_x16` does well with 15 processes.
 For other datasets, you may need to lower this limit if jobs fail due to errors raised because of server response timeouts (e.g. 12). 
 ```
 -iconcurrent_processes (default: 20) : maximum number of VCFs to process at a given time.
