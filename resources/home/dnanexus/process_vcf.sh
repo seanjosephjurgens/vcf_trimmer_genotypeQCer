@@ -38,8 +38,8 @@ then
     elif [ "$2" != "NA" ] && [ "$3" == "NA" ]
     then
         export BCFTOOLS_PLUGINS=plugins/
-        bcftools annotate -x $2 $FILEIN -Ou | bcftools +setGT $FILEINTER -Ou -- -t q -i 'FORMAT/FT!="PASS" & FORMAT/FT!="."' -n . | bcftools annotate -x FORMAT/FT -Oz -o $FILEINTER --threads $4 
-        bcftools norm -m - $FILEIN -Ou | bcftools view -f PASS -Ob -o $FILEOUT --threads $4
+        bcftools annotate -x $2 $FILEIN -Ou | bcftools +setGT -Ou -- -t q -i 'FORMAT/FT!="PASS" & FORMAT/FT!="."' -n . | bcftools annotate -x FORMAT/FT -Oz -o $FILEINTER --threads $4 
+        bcftools norm -m - $FILEINTER -Ou | bcftools view -f PASS -Ob -o $FILEOUT --threads $4
         #bcftools annotate -x $2 $FILEIN -Ou | bcftools norm -m - -Ou | bcftools view -f PASS -Ob -o $FILEINTER --threads $4
         #export BCFTOOLS_PLUGINS=plugins/
         #bcftools +setGT $FILEINTER -Ou -- -t q -i 'FORMAT/FT!="PASS" & FORMAT/FT!="."' -n . | bcftools annotate -x FORMAT/FT -Oz -o $FILEOUT --threads $4  
