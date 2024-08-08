@@ -12,7 +12,7 @@
 # $6 = output directory
 
 # Set error catching
-set -euo pipefail
+set -euxo pipefail
 
 # Check user has provided either fields to remove or metric thresholding
 if [ "$2" != "NA" ] || [ "$3" != "NA" ]
@@ -37,9 +37,12 @@ then
         #bcftools annotate -x $2 $FILEIN -Ob | bcftools norm -m - -Ob | bcftools view -f PASS -Ob | bcftools filter -i $3 -Oz -o $FILEINTER --threads $4
     elif [ "$2" != "NA" ] && [ "$3" == "NA" ]
     then
-        bcftools annotate -x $2 $FILEIN -Ou | bcftools norm -m - -Ou | bcftools view -f PASS -Ob -o $FILEINTER --threads $4
         export BCFTOOLS_PLUGINS=plugins/
-        bcftools +setGT $FILEINTER -Ou -- -t q -i 'FORMAT/FT!="PASS" & FORMAT/FT!="."' -n . | bcftools annotate -x FORMAT/FT -Oz -o $FILEOUT --threads $4  
+        bcftools annotate -x $2 $FILEIN -Ou | bcftools +setGT $FILEINTER -Ou -- -t q -i 'FORMAT/FT!="PASS" & FORMAT/FT!="."' -n . | bcftools annotate -x FORMAT/FT -Oz -o $FILEINTER --threads $4 
+        bcftools norm -m - $FILEIN -Ou | bcftools view -f PASS -Ob -o $FILEOUT --threads $4
+        #bcftools annotate -x $2 $FILEIN -Ou | bcftools norm -m - -Ou | bcftools view -f PASS -Ob -o $FILEINTER --threads $4
+        #export BCFTOOLS_PLUGINS=plugins/
+        #bcftools +setGT $FILEINTER -Ou -- -t q -i 'FORMAT/FT!="PASS" & FORMAT/FT!="."' -n . | bcftools annotate -x FORMAT/FT -Oz -o $FILEOUT --threads $4  
         #bcftools annotate -x $2 $FILEIN -Ob | bcftools norm -m - -Ob | bcftools view -f PASS -Oz -o $FILEINTER --threads $4
     else
         bcftools norm -m - $FILEIN -Ou | bcftools view -f PASS -Ob -o $FILEINTER --threads $4
