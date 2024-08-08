@@ -21,7 +21,8 @@ then
     # 1. Get the file onto the worker
     echo "Processing $1"
     dx download "$1"
-
+    dx download "$1".tbi
+    
     # 2. Strip original path and define local input and output files
     IFS='/' read -r -a f <<< "$1"
     FILEIN=${f[-1]}
