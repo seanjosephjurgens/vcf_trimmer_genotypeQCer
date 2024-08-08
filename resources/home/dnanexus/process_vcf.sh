@@ -27,12 +27,12 @@ then
     # 3. Run bcftools accounting for options to include
     if [ "$2" != "NA" ] && [ "$3" != "NA" ]
     then
-        bcftools annotate -x $2 $FILEIN -Ob | bcftools norm -m - -Ob | bcftools view -f PASS -Ob | bcftools filter -i $3 -Oz -o $FILEOUT --threads $4
+        bcftools annotate -x $2 $FILEIN -Ou | bcftools norm -m - -Ou | bcftools view -f PASS -Ou | bcftools filter -i $3 -Oz -o $FILEOUT --threads $4
     elif [ "$2" != "NA" ] && [ "$3" == "NA" ]
     then
-        bcftools annotate -x $2 $FILEIN -Ob | bcftools norm -m - -Ob | bcftools view -f PASS  -Oz -o $FILEOUT --threads $4
+        bcftools annotate -x $2 $FILEIN -Ou | bcftools norm -m - -Ou | bcftools view -f PASS  -Oz -o $FILEOUT --threads $4
     else
-        bcftools norm -m - $FILEIN -Ob | bcftools view -f PASS -Ob | bcftools filter -i $3 -Oz -o $FILEOUT --threads $4
+        bcftools norm -m - $FILEIN -Ou | bcftools view -f PASS -Ou | bcftools filter -i $3 -Oz -o $FILEOUT --threads $4
     fi
 
     # 4. Upload trimmed VCF here:
