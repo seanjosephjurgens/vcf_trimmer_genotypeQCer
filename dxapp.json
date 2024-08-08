@@ -1,6 +1,6 @@
 {
-  "name": "vcf_trimmer_genotypeQCer",
-  "title": "vcf_trimmer_genotypeQCer",
+  "name": "vcf_trimmer_genotypeqcer",
+  "title": "vcf_trimmer_genotypeqcer",
   "summary": "Trims VCFs by removing unwanted INFO and FORMAT fields, performs genotype QC, and applies specified INFO filters to VCFs.",
   "dxapi": "1.0.0",
   "version": "0.0.1",
