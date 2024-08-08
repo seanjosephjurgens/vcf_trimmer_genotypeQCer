@@ -1,7 +1,7 @@
 {
-  "name": "vcf_trimmer",
-  "title": "VCF Trimmer",
-  "summary": "Trims VCFs by removing unwanted INFO and FORMAT fields, splits multi-allelic sites, and applies filters to VCFs.",
+  "name": "vcf_trimmer_genotypeQCer",
+  "title": "vcf_trimmer_genotypeQCer",
+  "summary": "Trims VCFs by removing unwanted INFO and FORMAT fields, performs genotype QC, and applies specified INFO filters to VCFs.",
   "dxapi": "1.0.0",
   "version": "0.0.1",
   "inputSpec": [
