@@ -42,8 +42,8 @@ Strings that define inclusion criteria and fields to exclude should be consisten
 
 ### IMPORTANT:
 As opposed to the original version, this one is made for analyzing the DRAGEN 500k WGS data, and also performs the following QC by default:
-`INFO/FILTER=="PASS"` 
 `FORMAT/FT=="PASS" | FORMAT/FT=="."`
+This version also does NOT split multi-allelic variants since this step requires much more memory than the genotype QC and trimming. See the second applet, `vcf_splitter_variantqcer`, for the step that includes variant filtering and multi-allelic site splitting.
 
 #### Example 1:
 Removing all fields within `FORMAT` except for `GT` and `FT` (which are needed for genotypes and basic filtering):
