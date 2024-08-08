@@ -1,4 +1,4 @@
-# VCF Trimmer for UK Biobank RAP
+# VCF Trimmer and GenotypeQCer for UK Biobank RAP DRAGEN data
 #### Developed by Andrew Wood. University of Exeter
 #### Re-purposed by Sean Jurgens. Broad Institute / Amsterdam UMC
 
@@ -11,7 +11,7 @@ This applet performs parallel processing of VCFs through [bcftools](https://samt
 ### Obtaining and installing the applet
 Clone this github repo to a local directory:
 ```
-git clone https://github.com/seanjosephjurgens/vcf_trimmer
+git clone https://github.com/seanjosephjurgens/vcf_trimmer_genotypeqcer
 ```
 Navigate to a relevant directory within the project directory on the DNAnexus platform
 ```
@@ -19,7 +19,7 @@ dx cd /path/to/install/apps
 ```
 Now you are ready to build and upload the applet to the DNAnexus platform directory
 ```
-dx build -f vcf_trimmer
+dx build -f vcf_trimmer_genotypeqcer
 ```
 ---
 ### Inputs
@@ -41,14 +41,17 @@ This applet takes one file in as input that simply lists the VCFs to process, on
 Strings that define inclusion criteria and fields to exclude should be consistent with input expected by bcftools and placed within quotes. See the [bcftools](https://samtools.github.io/bcftools/bcftools.html) manual for more information.
 
 ### IMPORTANT:
-As opposed to the original version, this one is made for analyzing the DRAGEN 500k WGS data, and also performs the following QC by default:
+As opposed to the original version, this one is made for analyzing the DRAGEN 500k WGS data, and also performs the following genotype-level QC by default:
 `FORMAT/FT=="PASS" | FORMAT/FT=="."`
+
 This version also does NOT split multi-allelic variants since this step requires much more memory than the genotype QC and trimming. See the second applet, `vcf_splitter_variantqcer`, for the step that includes variant filtering and multi-allelic site splitting.
+
+The program will automatically discard the `FT` field after filtering genotypes, unless no fields were specified for removal at all (in which case it will keep all field including the `FORMAT/FT` field).
 
 #### Example 1:
 Removing all fields within `FORMAT` except for `GT` and `FT` (which are needed for genotypes and basic filtering):
 ```
-dx run vcf_trimmer \
+dx run vcf_trimmer_genotypeqcer \
   -ivcf_file_list=/path/to/vcf_file_list.txt \
   -ifile_label=trimmed \
   -ioutput_dir=/path/to/output/dir \
@@ -61,7 +64,7 @@ dx run vcf_trimmer \
 Removing all fields within `FORMAT` (except for `GT` and `FT`) and removing all from `INFO` and `FILTER`:
 
 ```
-dx run vcf_trimmer \
+dx run vcf_trimmer_genotypeqcer \
   -ivcf_file_list=/path/to/vcf_file_list.txt \
   -ifile_label=trimmed2 \
   -ioutput_dir=/path/to/output/dir \
@@ -75,7 +78,7 @@ dx run vcf_trimmer \
 Removing all fields within `FORMAT` (except for `GT` and `FT`) and removing all from `INFO`, except for `ExcHet` which must remain as as inclusion critera of an `ExcHet` > 1e-7:
 (please not that ExcHet is different for DRAGEN output than regular GATK output!!!)
 ```
-dx run vcf_trimmer \
+dx run vcf_trimmer_genotypeqcer \
   -ivcf_file_list=/path/to/vcf_file_list.txt \
   -ifile_label=trimmed3 \
   -ioutput_dir=/path/to/output/dir \
@@ -83,8 +86,6 @@ dx run vcf_trimmer \
   -ifields_to_remove="FORMAT/GQ,FORMAT/LAD,FORMAT/LPL,FORMAT/LAA,FORMAT/LAF,FORMAT/QL,INFO/AC,INFO/AN,INFO/NS,INFO/NS_GT,INFO/NS_NOGT,INFO/NS_NODATA,INFO/IC,INFO/HWE,INFO/HWE_CHISQ,FILTER/DRAGENSnpHardQUAL,FILTER/DRAGENIndelHardQUAL,FILTER/LowDepth,FILTER/PloidyConflict,FILTER/base_quality,FILTER/filtered_reads,FILTER/fragment_length,FILTER/low_af,FILTER/low_frac_info_reads,FILTER/low_normal_depth,FILTER/long_indel,FILTER/mapping_quality,FILTER/multiallelic,FILTER/non_homref_normal,FILTER/no_reliable_supporting_read,FILTER/panel_of_normals,FILTER/read_position,FILTER/RMxNRepeatRegion,FILTER/str_contraction,FILTER/too_few_supporting_reads,FILTER/weak_evidence" \
   -y
 ```
-
-The program will automatically discard the `FT` field after filtering genotypes, unless no fields were specified for removal at all (in which case it will keep all field including the `FORMAT/FT` field).
 
 #### Additional parameters
 Compute costs not yet intenstively testes; for previous version the below applied:
